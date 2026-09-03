@@ -1,9 +1,10 @@
 using System.Runtime.Versioning; //FOUNDATION LAYER: 
                                  // Framework-level namespaces. 
                                  // These come from .NET itself and ASP.NET.
-using Microsoft.AspNetCore.Mvc;  // FOUNDATION LAYER:
-                                 // Gives access to ControllerBase, ApiControoler, 
-                                 // IActionResult, routing attributes, and response helpers.
+using Microsoft.AspNetCore.Mvc;
+using PhoneTestApi.Models;  // FOUNDATION LAYER:
+                            // Gives access to ControllerBase, ApiControoler, 
+                            // IActionResult, routing attributes, and response helpers.
 
 namespace PhoneTestApi.Controllers  //CONTROLLER LAYER: 
                                     //Defines the namespace where the controllers live.
@@ -39,5 +40,17 @@ namespace PhoneTestApi.Controllers  //CONTROLLER LAYER:
                                                              // The anonymouse object becoms JSON: 
                                                              // {"message": "Hello from Brendon"}
         }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] HelloRequest request)
+        {
+            if (string.IsNullOrEmpty(request.FirstName))
+            {
+                return BadRequest("Name is required.");
+            }
+
+            return Ok($"Hello {request.FirstName} {request.Surname}, your POST worked!");
+        }
+
     }
 }
